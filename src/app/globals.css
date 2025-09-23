@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+@import "tailwindcss";
+@import "tw-animate-css";
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  /* Shadcn/UI colors - Dark theme only */
+  --color-background: #1a1a1a;
+  --color-foreground: #ffffff;
+
+  --color-card: #2a2a2a;
+  --color-card-foreground: #ffffff;
+
+  --color-popover: #2a2a2a;
+  --color-popover-foreground: #ffffff;
+
+  --color-primary: #0066cc; /* Accent Blue for primary actions */
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #333333; /* Tag Background for secondary elements */
+  --color-secondary-foreground: #ffffff;
+
+  --color-muted: #808080; /* Text Tertiary for muted elements */
+  --color-muted-foreground: #b0b0b0; /* Text Secondary for muted text */
+
+  --color-accent: #8b5cf6; /* Accent Purple for highlights */
+  --color-accent-foreground: #ffffff;
+
+  --color-destructive: #ef4444; /* Standard destructive red */
+  --color-destructive-foreground: #ffffff;
+
+  --color-border: #404040;
+  --color-input: #404040;
+  --color-ring: #0066cc; /* Accent Blue for focus rings */
+
+  /* Chart colors (default shadcn, can be customized if needed) */
+  --color-chart-1: #e67e22;
+  --color-chart-2: #2d8659;
+  --color-chart-3: #1e3a5f;
+  --color-chart-4: #f1c40f;
+  --color-chart-5: #e74c3c;
+
+  /* Custom design system colors */
+  --color-background-primary: #1a1a1a;
+  --color-background-secondary: #2a2a2a;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #b0b0b0;
+  --color-text-tertiary: #808080;
+  --color-accent-blue: #0066cc;
+  --color-accent-purple: #8b5cf6;
+  --color-success-green: #00ff00;
+  --color-tag-background: #333333;
+
+  /* Typography */
+  --font-primary: "Inter", sans-serif;
+  --font-japanese: "Noto Sans JP", sans-serif; /* Example Japanese font, adjust if specific font is identified */
+
+  /* Shadcn/UI radii and animations */
+  --radius-lg: 0.75rem; /* 12px */
+  --radius-md: calc(0.75rem - 2px);
+  --radius-sm: calc(0.75rem - 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-border);
+  }
+}
+
+@layer base {
+  :root {
+    /* Shadcn/UI CSS variables - Dark theme only */
+    --background: var(--color-background);
+    --foreground: var(--color-foreground);
+    --card: var(--color-card);
+    --card-foreground: var(--color-card-foreground);
+    --popover: var(--color-popover);
+    --popover-foreground: var(--color-popover-foreground);
+    --primary: var(--color-primary);
+    --primary-foreground: var(--color-primary-foreground);
+    --secondary: var(--color-secondary);
+    --secondary-foreground: var(--color-secondary-foreground);
+    --muted: var(--color-muted);
+    --muted-foreground: var(--color-muted-foreground);
+    --accent: var(--color-accent);
+    --accent-foreground: var(--color-accent-foreground);
+    --destructive: var(--color-destructive);
+    --destructive-foreground: var(--color-destructive-foreground);
+    --border: var(--color-border);
+    --input: var(--color-input);
+    --ring: var(--color-ring);
+    --chart-1: var(--color-chart-1);
+    --chart-2: var(--color-chart-2);
+    --chart-3: var(--color-chart-3);
+    --chart-4: var(--color-chart-4);
+    --chart-5: var(--color-chart-5);
+    --radius: var(--radius-lg); /* Default radius for shadcn components */
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    font-family: var(--font-primary);
+    background-color: var(--color-background-primary);
+    color: var(--color-text-primary);
+  }
+
+  h1 {
+    font-size: 48px;
+    font-weight: 700; /* bold */
+    color: var(--color-text-primary);
+  }
+
+  h2 {
+    font-size: 32px;
+    font-weight: 700; /* bold */
+    color: var(--color-text-primary);
+  }
+
+  h3 {
+    font-size: 24px;
+    font-weight: 600; /* semibold */
+    color: var(--color-text-primary);
+  }
+
+  p {
+    font-size: 16px;
+    font-weight: 400; /* normal */
+    color: var(--color-text-primary);
+  }
+
+  small {
+    font-size: 14px;
+    font-weight: 400; /* normal */
+    color: var(--color-text-secondary);
+  }
+
+  .text-micro {
+    font-size: 12px;
+    font-weight: 400; /* normal */
+    color: var(--color-text-tertiary);
+  }
+
+  .text-japanese {
+    font-family: var(--font-japanese);
+  }
+
+  .container {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem; /* Example padding, adjust as needed */
+    padding-right: 1rem; /* Example padding, adjust as needed */
+  }
+}
+
+@layer utilities {
+  /* Custom utility for grid gaps based on design system */
+  .grid-gap-24 {
+    gap: 24px;
+  }
+}
+
+/* Hide Next.js error overlay portal */
+nextjs-portal {
+  display: none !important;
+}
