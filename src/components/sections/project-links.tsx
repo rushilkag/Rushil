@@ -1,43 +1,100 @@
 import React from 'react';
 
-const GearIcon = () => (
-  <svg
-    fill="currentColor"
-    height="3rem"
-    width="3rem"
-    version="1.1"
-    id="Capa_1"
-    viewBox="0 0 491.133 491.133"
-    xmlSpace="preserve"
-    className="text-black/70"
-  >
-    <path d="M470.433 215.409c-3.136-11.439-8.121-22.333-14.711-32.48l-30.835-46.721c-2.731-4.137-7.908-6.198-12.964-5.151l-57.382 11.838c-9.006 1.857-18.067 2.748-27.16 2.748-8.423 0-16.829-0.697-25.09-2.115l-1.396-0.237c-17.51-3.08-34.11-9.613-48.817-19.103l-16.79-10.966c-13.882-9.06-25.862-20.613-35.452-34.131l-3.327-4.666L173.34 50.849c-1.359-1.9-2.038-4.218-2.038-6.573 0-2.316 0.66-4.595 1.947-6.535l0.129-0.188L205.15 0l-45.727 10.334c-12.9 2.915-25.239 7.576-36.756 13.841L96.26 39.863c-15.021 8.216-28.704 18.8-40.403 31.328L40.92 86.848c-1.843 1.977-2.784 4.58-2.784 7.238 0 2.659 0.941 5.261 2.784 7.238l31.782 34.011c11.109 11.884 24.151 21.905 38.63 29.588l21.233 11.235c15.11 7.994 31.56 12.83 48.736 14.129l1.629 0.121c22.109 1.651 44.59-1.222 65.733-8.333l19.53-6.545c11.082-3.714 21.6-8.524 31.395-14.316l2.133-1.272 43.766 52.128c-4.433 13.818-6.903 28.514-6.903 43.838 0 16.941 3.029 33.208 8.818 48.271l-43.085 51.314c-10.375-5.225-21.439-9.408-33.022-12.42l-21.2-5.465c-20.359-5.247-41.976-5.83-62.964-1.748-23.719 4.609-46.223 15.674-65.043 32.141l-24.978 21.849c-1.921 1.68-3.052 4.144-3.052 6.78 0 2.637 1.131 5.101 3.052 6.78l41.144 35.986c8.537 7.468 18.067 13.682 28.32 18.498l19.52 9.171c18.337 8.621 38.311 13.436 58.892 13.436 11.96 0 23.858-1.5 35.393-4.425l60.015-15.474c5.031-1.297 8.595-5.829 8.595-11.139v-48.062c11.536-4.882 22.132-11.493 31.543-19.648l38.253-33.456c1.921-1.68 3.052-4.144 3.052-6.78 0-4.996-3.83-9.15-8.705-9.648-5.352-0.55-9.982 2.768-11.536 7.749l-38.006 33.239c-8.575 7.495-18.092 13.737-28.358 18.459v19.497l-51.568 13.3c-9.213 2.375-18.663 3.593-28.243 3.593-17.729 0-35.048-4.008-50.62-11.666l-19.52-9.171c-8.914-4.19-17.234-9.613-24.693-16.118l-41.144-35.986-0.018 0.012 22.422-19.614c16.353-14.316 35.659-23.806 56.401-27.822 17.91-3.468 36.338-2.923 53.687 1.543l21.2 5.465c13.738 3.542 26.699 9.117 38.307 16.48l45.454-54.135c-5.734-15.01-8.73-31.189-8.73-48.044 0-13.883 2.228-27.276 6.366-39.957l-43.765-52.128Z"></path>
-  </svg>
-);
+const experiences = [
+  {
+    role: "Co-Founder",
+    company: "Raay",
+    period: "May 2025 - Present",
+    bullets: [
+      "Creating the next generation of AI interns dedicated to startups keeping their teams lean and efficient",
+    ]
+  },
+  {
+    role: "Software Engineering Intern",
+    company: "RouteOne",
+    period: "May 2025 - Present",
+    bullets: [
+      "Changing the car buying experience for the better",
+    ]
+  },
+  {
+    role: "Growth",
+    company: "OpenNote(YC S25)",
+    period: "July 2025 - Present",
+    bullets: [
+      "Empowering college students to learn better and providing a platform to think better",
+    ]
+  },
+  {
+    role: "Vice President",
+    company: "180 Degrees Consulting",
+    period: "Jan 2025 - Present",
+    bullets: [
+      "Did consulting work for startups in the AI, Edtech, and FinTech space",
+    ]
+  },
+  {
+    role: "Growth",
+    company: "Swsh",
+    period: "Aug 2024 - Jan 2025",
+    bullets: [
+      "Onboarded communities to make connections and create a community",
+    ]
+  },
+  {
+    role: "Founding Engineer",
+    company: "Circlez",
+    period: "Jan 2024 - June 2024",
+    bullets: [
+      "Developed a gamified version of task tracking for friend groups to achieve goals together",
+    ]
+  },
+  {
+    role: "VC Scout",
+    company: "RevRoad",
+    period: "May 2024 - June 2024",
+    bullets: [
+      "Scouted Edtech startups, met with founders, two companies which I scouted were invested in",
+    ]
+  },
+];
 
-const ProjectLinks = () => {
+const ExperienceSection = () => {
   return (
-    <a
-      href="/projects"
-      className="sm:col-start-7 sm:col-end-9 hover:opacity-80 sm:row-start-3 sm:row-end-6 relative group max-sm:h-[180px] p-1.5 border-none rounded-3xl z-[6] transition-opacity"
-    >
-      <div className="rounded-2xl w-full h-full p-3 relative bg-gradient-to-br from-violet-300 to-purple-400">
-        <div className="flex size-full items-start justify-between">
-          <div className="flex flex-col justify-start">
-            <GearIcon />
-            <p className="font-bold text-2xl text-black/90">
-              PROJECT <br /> SSS
-            </p>
-          </div>
-          <div className="flex items-end justify-end h-full">
-            <p className="font-jp font-bold text-4xl leading-10 text-black/70">
-              工<br />芸
-            </p>
-          </div>
-        </div>
+    <div className="w-full h-full p-3">
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-lg font-bold text-white">Experience</h2>
+        <a
+          href="/Kagithala, Rushil Resume .pdf" 
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs text-zinc-400 hover:text-white transition-colors"
+        >
+          View Resume →
+        </a>
       </div>
-    </a>
+      
+      <div className="space-y-4 h-[calc(100%-2rem)] overflow-y-auto">
+        {experiences.map((exp, index) => (
+          <div key={index} className="border-l-2 border-zinc-600 pl-3">
+            <div className="mb-2">
+              <h3 className="font-semibold text-white text-sm">{exp.role}</h3>
+              <p className="text-zinc-300 text-xs">{exp.company}</p>
+              <p className="text-zinc-500 text-xs">{exp.period}</p>
+            </div>
+            <ul className="space-y-1">
+              {exp.bullets.map((bullet, bulletIndex) => (
+                <li key={bulletIndex} className="text-zinc-400 text-xs flex items-start font-bold">
+                  <span className="mr-2 text-zinc-500">•</span>
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 
-export default ProjectLinks;
+export default ExperienceSection;
