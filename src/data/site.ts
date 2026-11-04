@@ -11,8 +11,8 @@ export const site = {
   // Leave empty to let Vercel fill in the production URL automatically.
   url: "",
 
-  // Favourite word, shown above the name.
-  word: { romaji: "Ikigai", ja: "生き甲斐" },
+  // Favourite word (ikigai), shown above the name.
+  word: "生き甲斐",
 
   email: "srkagithala@gmail.com",
 
@@ -24,6 +24,7 @@ export const site = {
   ],
 
   relay: { label: "Relay", href: "https://relayapp.im" },
+  swsh: { label: "Swsh", href: "https://www.joinswsh.com" },
 } as const;
 
 export type LinkId = (typeof site.links)[number]["id"];

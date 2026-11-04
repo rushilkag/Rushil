@@ -59,13 +59,8 @@ export default function Home() {
         <main className="page-load-blur w-full max-w-[700px] text-forest sm:px-10">
           <div className="flex flex-col gap-2.5">
             {/* favourite word */}
-            <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-forest/75">
-              <span>
-                &quot;{site.word.romaji}&quot;{" "}
-                <span lang="ja" className="tracking-normal">
-                  {site.word.ja}
-                </span>
-              </span>
+            <div className="font-mono text-[12px] text-forest/75">
+              <span lang="ja">{site.word}</span>
             </div>
 
             {/* name */}
@@ -80,8 +75,11 @@ export default function Home() {
                 <a className="link" href={site.relay.href} target="_blank" rel="noopener noreferrer">
                   {site.relay.label}
                 </a>{" "}
-                and Swsh, along with a handful of my own startups that didn&apos;t make it — each one taught me more than
-                the last.
+                and{" "}
+                <a className="link" href={site.swsh.href} target="_blank" rel="noopener noreferrer">
+                  {site.swsh.label}
+                </a>
+                , along with a handful of my own startups that didn&apos;t make it.
               </p>
               <p>
                 I believe we&apos;re still incredibly early in AI. Those of us building and using it today are in the top
