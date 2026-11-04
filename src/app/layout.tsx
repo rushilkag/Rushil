@@ -1,47 +1,39 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import type { ReactNode } from "react";
 import "./globals.css";
-import VisualEditsMessenger from "../visual-edits/VisualEditsMessenger";
-import ErrorReporter from "@/components/ErrorReporter";
-import Script from "next/script";
+import { mono, sans, serif } from "@/lib/fonts";
+import { site } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Rushil Kagithala",
-  description: "wootwoot.",
-  keywords: "Rushil Kagithala, Data Science, University of Michigan, Software Developer, Portfolio",
-  authors: [{ name: "Rushil Kagithala" }],
+  ...(site.url ? { metadataBase: new URL(site.url) } : {}),
+  title: site.title,
+  description: site.description,
+  authors: [{ name: site.name }],
   openGraph: {
-    title: "Rushil Kagithala - Data Science Student",
-    description: "woot",
     type: "website",
+    title: site.title,
+    description: site.description,
+    ...(site.url ? { url: site.url } : {}),
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@Rushilkag",
+    creator: "@Rushilkag",
+    title: site.title,
+    description: site.description,
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const viewport: Viewport = {
+  themeColor: "#f4f0e4",
+  width: "device-width",
+  initialScale: 1,
+};
+
+export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en">
-      <head>
-        <script async src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
-        <script async src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.fog.min.js"></script>
-      </head>
-      <body className="antialiased">
-        <ErrorReporter />
-        <Script
-          src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/scripts//route-messenger.js"
-          strategy="afterInteractive"
-          data-target-origin="*"
-          data-message-type="ROUTE_CHANGE"
-          data-include-search-params="true"
-          data-only-in-iframe="true"
-          data-debug="true"
-          data-custom-data='{"appName": "YourApp", "version": "1.0.0", "greeting": "hi"}'
-        />
-        {children}
-        <VisualEditsMessenger />
-      </body>
+    <html lang="en" className={`${sans.variable} ${serif.variable} ${mono.variable}`}>
+      <body className="font-sans antialiased">{children}</body>
     </html>
   );
 }

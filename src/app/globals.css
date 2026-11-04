@@ -1,202 +1,256 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
 @import "tailwindcss";
-@import "tw-animate-css";
-@custom-variant dark (&:is(.dark *));
 
+/* Santé-derived palette and the three self-hosted families (variables come from src/lib/fonts.ts). */
 @theme {
-  /* Shadcn/UI colors - Dark theme only */
-  --color-background: #1a1a1a;
-  --color-foreground: #ffffff;
+  --color-cream: #f4f0e4;
+  --color-cream-deep: #e9e3d2;
+  --color-forest: #0e3b1f;
+  --color-forest-deep: #082a15;
+  --color-sun: #e9b64a;
+  --color-sky: #5c9ed6;
+  --color-brick: #d9532b;
 
-  --color-card: #2a2a2a;
-  --color-card-foreground: #ffffff;
+  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+}
 
-  --color-popover: #2a2a2a;
-  --color-popover-foreground: #ffffff;
+:root {
+  --cream: #f4f0e4;
+  --forest: #0e3b1f;
+  --forest-rgb: 14 59 31;
+  --sun: #e9b64a;
+  --sky: #5c9ed6;
+  --brick: #d9532b;
+  --para-gap: 0.7rem;
+}
 
-  --color-primary: #0066cc; /* Accent Blue for primary actions */
-  --color-primary-foreground: #ffffff;
+html {
+  -webkit-text-size-adjust: 100%;
+  background: var(--cream);
+}
 
-  --color-secondary: #333333; /* Tag Background for secondary elements */
-  --color-secondary-foreground: #ffffff;
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--forest);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+}
 
-  --color-muted: #808080; /* Text Tertiary for muted elements */
-  --color-muted-foreground: #b0b0b0; /* Text Secondary for muted text */
+::selection {
+  background: rgb(var(--forest-rgb) / 0.18);
+  color: var(--forest);
+}
 
-  --color-accent: #8b5cf6; /* Accent Purple for highlights */
-  --color-accent-foreground: #ffffff;
+/* ---------- backdrop: dotted field outside, clean paper panel inside ---------- */
 
-  --color-destructive: #ef4444; /* Standard destructive red */
-  --color-destructive-foreground: #ffffff;
+.halftone {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: var(--cream);
+}
 
-  --color-border: #404040;
-  --color-input: #404040;
-  --color-ring: #0066cc; /* Accent Blue for focus rings */
+/* Halftone dots, strongest toward the corners (as on the Santé brand book cover). */
+.halftone::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgb(var(--forest-rgb) / 0.3) 1px, transparent 1.4px);
+  background-size: 9px 9px;
+  -webkit-mask-image: radial-gradient(ellipse 72% 80% at 50% 45%, transparent 30%, #000 100%);
+  mask-image: radial-gradient(ellipse 72% 80% at 50% 45%, transparent 30%, #000 100%);
+}
 
-  /* Chart colors (default shadcn, can be customized if needed) */
-  --color-chart-1: #e67e22;
-  --color-chart-2: #2d8659;
-  --color-chart-3: #1e3a5f;
-  --color-chart-4: #f1c40f;
-  --color-chart-5: #e74c3c;
+/* The page panel: hairline columns, a whisper of dots, and a soft green glow at the foot. */
+.column-rules {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  margin: 0 auto;
+  width: min(100% - 1.5rem, 760px);
+  background-color: var(--cream);
+  border-left: 1px solid rgb(var(--forest-rgb) / 0.14);
+  border-right: 1px solid rgb(var(--forest-rgb) / 0.14);
+}
 
-  /* Custom design system colors */
-  --color-background-primary: #1a1a1a;
-  --color-background-secondary: #2a2a2a;
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #b0b0b0;
-  --color-text-tertiary: #808080;
-  --color-accent-blue: #0066cc;
-  --color-accent-purple: #8b5cf6;
-  --color-success-green: #00ff00;
-  --color-tag-background: #333333;
+.column-rules::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgb(var(--forest-rgb) / 0.09) 1px, transparent 1.4px);
+  background-size: 9px 9px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 55%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 55%, #000 100%);
+}
 
-  /* Typography */
-  --font-primary: "Inter", sans-serif;
-  --font-japanese: "Noto Sans JP", sans-serif; /* Example Japanese font, adjust if specific font is identified */
+.column-rules::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 42% at 50% 106%, rgb(127 176 105 / 0.28), transparent 70%);
+}
 
-  /* Shadcn/UI radii and animations */
-  --radius-lg: 0.75rem; /* 12px */
-  --radius-md: calc(0.75rem - 2px);
-  --radius-sm: calc(0.75rem - 4px);
+/* Full-viewport height with a fallback for browsers without dvh. */
+.full-height {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
 
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
+/* ---------- type details ---------- */
 
-  @keyframes accordion-down {
-    from {
-      height: 0;
-    }
-    to {
-      height: var(--radix-accordion-content-height);
-    }
+.link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgb(var(--forest-rgb) / 0.35);
+  text-underline-offset: 3px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.link:hover {
+  color: var(--brick);
+  text-decoration-color: currentColor;
+}
+
+/* Santé's little three-colour stripe, borrowed for the quote's left edge. */
+.quote-stripe {
+  position: relative;
+  padding-left: 1rem;
+}
+
+.quote-stripe::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 3px;
+  bottom: 3px;
+  width: 3px;
+  background: linear-gradient(
+    to bottom,
+    var(--sun) 0 33.4%,
+    var(--brick) 33.4% 66.7%,
+    var(--sky) 66.7% 100%
+  );
+}
+
+/* ---------- motion ---------- */
+
+@keyframes pageLoadBlurIn {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(6px);
   }
-  @keyframes accordion-up {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
-    to {
-      height: 0;
-    }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
   }
 }
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
+.page-load-blur {
+  animation: pageLoadBlurIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
 
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-border);
+@keyframes focusWordFade {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@layer base {
-  :root {
-    /* Shadcn/UI CSS variables - Dark theme only */
-    --background: var(--color-background);
-    --foreground: var(--color-foreground);
-    --card: var(--color-card);
-    --card-foreground: var(--color-card-foreground);
-    --popover: var(--color-popover);
-    --popover-foreground: var(--color-popover-foreground);
-    --primary: var(--color-primary);
-    --primary-foreground: var(--color-primary-foreground);
-    --secondary: var(--color-secondary);
-    --secondary-foreground: var(--color-secondary-foreground);
-    --muted: var(--color-muted);
-    --muted-foreground: var(--color-muted-foreground);
-    --accent: var(--color-accent);
-    --accent-foreground: var(--color-accent-foreground);
-    --destructive: var(--color-destructive);
-    --destructive-foreground: var(--color-destructive-foreground);
-    --border: var(--color-border);
-    --input: var(--color-input);
-    --ring: var(--color-ring);
-    --chart-1: var(--color-chart-1);
-    --chart-2: var(--color-chart-2);
-    --chart-3: var(--color-chart-3);
-    --chart-4: var(--color-chart-4);
-    --chart-5: var(--color-chart-5);
-    --radius: var(--radius-lg); /* Default radius for shadcn components */
-  }
-
-  html {
-    color-scheme: dark;
-  }
-
-  body {
-    font-family: var(--font-primary);
-    background-color: var(--color-background-primary);
-    color: var(--color-text-primary);
-  }
-
-  h1 {
-    font-size: 48px;
-    font-weight: 700; /* bold */
-    color: var(--color-text-primary);
-  }
-
-  h2 {
-    font-size: 32px;
-    font-weight: 700; /* bold */
-    color: var(--color-text-primary);
-  }
-
-  h3 {
-    font-size: 24px;
-    font-weight: 600; /* semibold */
-    color: var(--color-text-primary);
-  }
-
-  p {
-    font-size: 16px;
-    font-weight: 400; /* normal */
-    color: var(--color-text-primary);
-  }
-
-  small {
-    font-size: 14px;
-    font-weight: 400; /* normal */
-    color: var(--color-text-secondary);
-  }
-
-  .text-micro {
-    font-size: 12px;
-    font-weight: 400; /* normal */
-    color: var(--color-text-tertiary);
-  }
-
-  .text-japanese {
-    font-family: var(--font-japanese);
-  }
-
-  .container {
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem; /* Example padding, adjust as needed */
-    padding-right: 1rem; /* Example padding, adjust as needed */
-  }
+.focus-word {
+  display: inline-block;
+  animation: focusWordFade 0.9s ease-in-out both;
 }
 
-@layer utilities {
-  /* Custom utility for grid gaps based on design system */
-  .grid-gap-24 {
-    gap: 24px;
-  }
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  transition: opacity 0.15s ease;
 }
 
-/* Hide Next.js error overlay portal */
-nextjs-portal {
-  display: none !important;
+.social-link:hover,
+.social-link:focus-visible {
+  opacity: 1;
+  outline: none;
+}
+
+.social-inner {
+  display: inline-flex;
+  transform: translate3d(var(--mx, 0px), var(--my, 0px), 0) scale(1);
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.social-link:hover .social-inner {
+  transform: translate3d(var(--mx, 0px), var(--my, 0px), 0) scale(1.08);
+}
+
+/* ---------- custom cursor (pointer devices only) ---------- */
+
+.has-cursor,
+.has-cursor * {
+  cursor: none !important;
+}
+
+.cursor-dot,
+.cursor-light {
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-radius: 9999px;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.cursor-dot {
+  z-index: 9999;
+  width: 10px;
+  height: 10px;
+  background: var(--forest);
+  transition: width 0.18s ease, height 0.18s ease, background-color 0.18s ease,
+    box-shadow 0.18s ease, opacity 0.2s ease;
+}
+
+.cursor-dot.is-link {
+  width: 28px;
+  height: 28px;
+  background: rgb(var(--forest-rgb) / 0.08);
+  box-shadow: inset 0 0 0 1px var(--forest);
+}
+
+.cursor-light {
+  z-index: 9997;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(
+    circle,
+    rgb(var(--forest-rgb) / 0.07) 0,
+    rgb(var(--forest-rgb) / 0.025) 38%,
+    transparent 68%
+  );
+  transition: opacity 0.2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-load-blur,
+  .focus-word {
+    animation: none;
+  }
+  .social-inner,
+  .link,
+  .social-link {
+    transition: none;
+  }
 }

@@ -1,142 +1,150 @@
-"use client";
+import type { ReactElement, ReactNode } from "react";
+import Clock from "@/components/Clock";
+import Cursor from "@/components/Cursor";
+import FocusWord from "@/components/FocusWord";
+import SocialLink from "@/components/SocialLink";
+import { GitHubIcon, LinkedInIcon, MailIcon, ResumeIcon, XIcon } from "@/components/Icons";
+import { site, type LinkId } from "@/data/site";
 
-import TechStackSidebar from "@/components/sections/tech-stack-sidebar";
-import ProfileHeader from "@/components/sections/profile-header";
-import DailyToolsSection from "@/components/sections/daily-tools";
-import MusicPlayer from "@/components/sections/music-player";
-import PersonalQuote from "@/components/sections/naruto-quote";
-import ProjectLinks from "@/components/sections/project-links";
-import SocialLinks from "@/components/sections/social-links";
-import FooterClouds from "@/components/sections/footer-clouds";
-import ActivityStats from "@/components/sections/activity-stats";
-import { useEffect } from "react";
-//import Education from "@/components/sections/education";
+const ICONS: Record<LinkId, (props: { size?: number }) => ReactElement> = {
+  resume: ResumeIcon,
+  linkedin: LinkedInIcon,
+  github: GitHubIcon,
+  x: XIcon,
+  mail: MailIcon,
+};
+
+type Accent = "sun" | "sky" | "brick";
+const ACCENT_CLASS: Record<Accent, string> = {
+  sun: "text-sun",
+  sky: "text-sky",
+  brick: "text-brick",
+};
+
+function Section({ label, accent, children }: { label: string; accent: Accent; children: ReactNode }) {
+  return (
+    <section>
+      <h2 className="font-mono text-[12px] font-semibold uppercase tracking-[0.12em]">
+        {label}
+        <span className={ACCENT_CLASS[accent]}> .</span>
+      </h2>
+      <div className="mb-[var(--para-gap)] mt-1 h-px w-full bg-forest/70" />
+      <div className="space-y-[var(--para-gap)] text-[clamp(13.5px,1.7vw,14.5px)] leading-[1.55] tracking-[-0.004em] text-forest/90">
+        {children}
+      </div>
+    </section>
+  );
+}
 
 export default function Home() {
-  useEffect(() => {
-    let vantaEffect: any = null;
-
-    const initVanta = () => {
-      if (typeof window !== 'undefined' && (window as any).VANTA && (window as any).THREE) {
-        try {
-          vantaEffect = (window as any).VANTA.FOG({
-            el: "#vanta-bg",
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            highlightColor: 0x21E6C1, // Aurora cyan
-            midtoneColor: 0x7DF9FF,   // Light cyan
-            lowlightColor: 0x9AE66E,  // Aurora green
-            baseColor: 0x0B132B,      // Deep aurora blue
-            blurFactor: 0.6,
-            speed: 1,
-            zoom: 1
-          });
-          console.log('Vanta effect initialized successfully');
-        } catch (error) {
-          console.error('Error initializing Vanta effect:', error);
-        }
-      } else {
-        console.log('Waiting for VANTA and THREE.js to load...');
-        setTimeout(initVanta, 200);
-      }
-    };
-
-    // Start initialization after a short delay
-    const timer = setTimeout(initVanta, 1000);
-
-    return () => {
-      clearTimeout(timer);
-      if (vantaEffect) {
-        try {
-          vantaEffect.destroy();
-        } catch (error) {
-          console.error('Error destroying Vanta effect:', error);
-        }
-      }
-    };
-  }, []);
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: site.name,
+    ...(site.url ? { url: site.url } : {}),
+    email: `mailto:${site.email}`,
+    jobTitle: "Software Engineer",
+    description: site.description,
+    affiliation: [
+      { "@type": "CollegeOrUniversity", name: "University of Michigan" },
+      { "@type": "Organization", name: "Relay", url: site.relay.href },
+    ],
+    address: { "@type": "PostalAddress", addressLocality: "Ann Arbor", addressRegion: "MI", addressCountry: "US" },
+    sameAs: site.links.filter((l) => l.href.startsWith("http")).map((l) => l.href),
+  };
 
   return (
-    <div className="min-h-screen text-white relative">
-      {/* Vanta.js Background */}
-      <div id="vanta-bg" className="fixed inset-0 z-0 bg-gradient-to-br from-[#0B132B] via-[#1C2541] to-[#3A506B]"></div>
-      
-      {/* Content Overlay */}
-      <div className="relative z-10">
-        <div className="max-w-7xl mx-auto p-3">
-        <div className="grid grid-cols-1 sm:grid-cols-8 sm:grid-rows-4 gap-2 h-[calc(100vh-1.5rem)] relative overflow-hidden">
-          {/* Tech Stack Sidebar - Left column */}
-          <div className="sm:col-span-2 sm:row-span-4">
-            <div className="backdrop-blur-md bg-black/60 rounded-xl border border-white/30 h-full">
-              <TechStackSidebar />
-            </div>
-          </div>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-          {/* Profile Header - Main center section */}
-          <div className="sm:col-span-4 sm:row-span-1">
-            <div className="backdrop-blur-md bg-black/60 rounded-xl border border-white/30 h-full">
-              <ProfileHeader />
-            </div>
-          </div>
+      <div className="halftone" aria-hidden="true" />
+      <div className="column-rules" aria-hidden="true" />
 
-          {/* Project Links - Right side */}
-          <div className="sm:col-span-2 sm:row-span-4">
-            <div className="backdrop-blur-md bg-black/60 rounded-xl border border-white/30 h-full overflow-hidden">
-              <ProjectLinks />
+      <div className="full-height relative z-10 flex items-center justify-center px-5 py-10 sm:px-4 sm:py-8">
+        <main className="page-load-blur w-full max-w-[700px] text-forest sm:px-10">
+          <div className="flex flex-col gap-2.5">
+            {/* location / local time */}
+            <div className="flex items-center justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.08em] text-forest/75">
+              <span>&quot;Location&quot; {site.location.label}</span>
+              <span>
+                &quot;Local time&quot; <Clock timeZone={site.location.timeZone} />
+              </span>
             </div>
-          </div>
 
-          {/* Education Section - Below profile header */}
-          <div className="sm:col-span-4 sm:row-span-1">
-            <div className="w-full h-full backdrop-blur-md bg-black/60 border border-white/30 rounded-xl p-6">
-              <div className="flex items-center gap-6 h-full">
-                {/* University Logo */}
-                <div className="flex-shrink-0">
-                  <img
-                    src="/umich.png"
-                    alt="University of Michigan Logo"
-                    className="w-24 h-70 rounded-lg object-contain"
-                  />
-                </div>
-                
-                {/* Education Details */}
-                <div className="flex-1">
-                  <h3 className="font-bold text-white text-xl mb-2">University of Michigan</h3>
-                  <p className="text-orange-400 text-lg mb-2">B.S.E. Data Science</p>
-                  <p className="text-zinc-400 text-md">Ann Arbor, Michigan</p>
-                </div>
-              </div>
-            </div>
-          </div>
+            {/* name + focus word */}
+            <h1 className="font-serif text-[clamp(32px,6vw,44px)] font-medium leading-[1.05] tracking-[-0.022em]">
+              {site.name}
+              <span className="text-brick"> .</span>{" "}
+              <FocusWord
+                words={site.focusWords}
+                className="font-normal italic text-[clamp(21px,4vw,33px)] tracking-[-0.01em] text-forest/60"
+              />
+            </h1>
 
-          {/* Daily Tools - Below education left */}
-          <div className="sm:col-span-2 sm:row-span-2">
-            <div className="h-full backdrop-blur-md bg-black/60 border border-white/30 rounded-xl p-3">
-              <DailyToolsSection />
-            </div>
-          </div>
+            {/* quote */}
+            <blockquote className="quote-stripe mb-[var(--para-gap)]">
+              <p className="font-serif text-[clamp(15px,2vw,18px)] font-medium leading-snug tracking-[-0.01em] text-forest/95">
+                &ldquo;{site.quote.text}&rdquo;
+              </p>
+              <footer className="mt-1.5 font-mono text-[10.5px] uppercase tracking-[0.1em] text-forest/55">
+                &mdash; {site.quote.source}
+              </footer>
+            </blockquote>
 
-          {/* Music Player and Social Links - Stacked vertically */}
-          <div className="sm:col-span-2 sm:row-span-2">
-            <div className="h-full flex flex-col gap-2">
-              {/* Music Player */}
-              <div className="h-1/2 backdrop-blur-md bg-black/60 border border-white/30 rounded-xl p-3">
-                <MusicPlayer />
-              </div>
-              
-              {/* Social Links */}
-              <div className="h-1/2 backdrop-blur-md bg-black/60 border border-white/30 rounded-xl p-3">
-                <SocialLinks />
-              </div>
-            </div>
-          </div>
+            <Section label="Work" accent="sun">
+              <p>
+                I&apos;m a Computer Science student at the University of Michigan and an incoming software engineer at
+                Capital One.
+              </p>
+              <p>
+                I&apos;m also building{" "}
+                <a className="link" href={site.relay.href} target="_blank" rel="noopener noreferrer">
+                  {site.relay.label}
+                </a>{" "}
+                with Advait, a messaging platform that makes interacting with AI agents as simple as texting.
+              </p>
+              <p>
+                I believe we&apos;re still incredibly early in AI. Those of us building and using it today are in the top
+                1% of people experiencing what this technology can do. I&apos;m especially interested in the intersection
+                of AI and everyday life, and how we can make it accessible enough that our parents and grandparents can
+                use it to meaningfully improve their lives.
+              </p>
+              <p>
+                Building something in this space?{" "}
+                <a className="link" href={`mailto:${site.email}`}>
+                  Email me
+                </a>
+                .
+              </p>
+            </Section>
 
-        </div>
-        </div>
+            <Section label="Personal" accent="sky">
+              <p>Outside of tech, I enjoy coffee, DJing, traveling, and meeting interesting people.</p>
+              <p>Currently in Ann Arbor. If you&apos;re around, let&apos;s grab a coffee.</p>
+            </Section>
+
+            <div className="mt-1 h-px w-full bg-forest/20" />
+
+            <footer className="mt-1 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
+              <nav aria-label="Links" className="flex flex-wrap items-center gap-5 sm:gap-7">
+                {site.links.map((link) => {
+                  const Icon = ICONS[link.id];
+                  return (
+                    <SocialLink key={link.id} href={link.href} label={link.label}>
+                      <Icon size={18} />
+                    </SocialLink>
+                  );
+                })}
+              </nav>
+              <span className="font-mono text-[10.5px] uppercase tracking-[0.06em] text-forest/55">
+                (Last updated, {site.lastUpdated})
+              </span>
+            </footer>
+          </div>
+        </main>
       </div>
-    </div>
+
+      <Cursor />
+    </>
   );
 }
