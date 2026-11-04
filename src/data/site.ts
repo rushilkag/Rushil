@@ -5,7 +5,7 @@ export const site = {
   name: "Rushil Kagithala",
   title: "Rushil Kagithala",
   description:
-    "Rushil Kagithala is a Computer Science student at the University of Michigan, an incoming software engineer at Capital One, and co-founder of Relay, a messaging platform that makes interacting with AI agents as simple as texting.",
+    "Rushil Kagithala is a Computer Science student at the University of Michigan who built Relay, a messaging platform that makes interacting with AI agents as simple as texting.",
 
   // Canonical URL, e.g. "https://rushilkagithala.com". Used for Open Graph tags.
   // Leave empty to let Vercel fill in the production URL automatically.
@@ -14,14 +14,6 @@ export const site = {
   location: {
     label: "Ann Arbor",
     timeZone: "America/Detroit",
-  },
-
-  // The word after your name cycles through these.
-  focusWords: ["curiosity", "building", "early", "coffee", "relay"],
-
-  quote: {
-    text: "The best way to predict the future is to invent it.",
-    source: "Alan Kay",
   },
 
   email: "srkagithala@gmail.com",
@@ -35,8 +27,6 @@ export const site = {
   ],
 
   relay: { label: "Relay", href: "https://relayapp.im" },
-
-  lastUpdated: "Nov 03, 2026",
 } as const;
 
 export type LinkId = (typeof site.links)[number]["id"];

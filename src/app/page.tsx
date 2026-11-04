@@ -1,7 +1,5 @@
 import type { ReactElement, ReactNode } from "react";
 import Clock from "@/components/Clock";
-import Cursor from "@/components/Cursor";
-import FocusWord from "@/components/FocusWord";
 import SocialLink from "@/components/SocialLink";
 import { GitHubIcon, LinkedInIcon, MailIcon, ResumeIcon, XIcon } from "@/components/Icons";
 import { site, type LinkId } from "@/data/site";
@@ -71,37 +69,20 @@ export default function Home() {
               </span>
             </div>
 
-            {/* name + focus word */}
-            <h1 className="font-serif text-[clamp(32px,6vw,44px)] font-medium leading-[1.05] tracking-[-0.022em]">
+            {/* name */}
+            <h1 className="mb-[var(--para-gap)] font-serif text-[clamp(32px,6vw,44px)] font-medium leading-[1.05] tracking-[-0.022em]">
               {site.name}
-              <span className="text-brick"> .</span>{" "}
-              <FocusWord
-                words={site.focusWords}
-                className="font-normal italic text-[clamp(21px,4vw,33px)] tracking-[-0.01em] text-forest/60"
-              />
+              <span className="text-brick"> .</span>
             </h1>
 
-            {/* quote */}
-            <blockquote className="quote-stripe mb-[var(--para-gap)]">
-              <p className="font-serif text-[clamp(15px,2vw,18px)] font-medium leading-snug tracking-[-0.01em] text-forest/95">
-                &ldquo;{site.quote.text}&rdquo;
-              </p>
-              <footer className="mt-1.5 font-mono text-[10.5px] uppercase tracking-[0.1em] text-forest/55">
-                &mdash; {site.quote.source}
-              </footer>
-            </blockquote>
-
             <Section label="Work" accent="sun">
+              <p>I&apos;m a Computer Science student at the University of Michigan.</p>
               <p>
-                I&apos;m a Computer Science student at the University of Michigan and an incoming software engineer at
-                Capital One.
-              </p>
-              <p>
-                I&apos;m also building{" "}
+                I built{" "}
                 <a className="link" href={site.relay.href} target="_blank" rel="noopener noreferrer">
                   {site.relay.label}
-                </a>{" "}
-                with Advait, a messaging platform that makes interacting with AI agents as simple as texting.
+                </a>
+                , a messaging platform that makes interacting with AI agents as simple as texting.
               </p>
               <p>
                 I believe we&apos;re still incredibly early in AI. Those of us building and using it today are in the top
@@ -109,23 +90,15 @@ export default function Home() {
                 of AI and everyday life, and how we can make it accessible enough that our parents and grandparents can
                 use it to meaningfully improve their lives.
               </p>
-              <p>
-                Building something in this space?{" "}
-                <a className="link" href={`mailto:${site.email}`}>
-                  Email me
-                </a>
-                .
-              </p>
             </Section>
 
             <Section label="Personal" accent="sky">
               <p>Outside of tech, I enjoy coffee, DJing, traveling, and meeting interesting people.</p>
-              <p>Currently in Ann Arbor. If you&apos;re around, let&apos;s grab a coffee.</p>
             </Section>
 
             <div className="mt-1 h-px w-full bg-forest/20" />
 
-            <footer className="mt-1 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
+            <footer className="mt-1 flex flex-wrap items-center gap-3 sm:gap-4">
               <nav aria-label="Links" className="flex flex-wrap items-center gap-5 sm:gap-7">
                 {site.links.map((link) => {
                   const Icon = ICONS[link.id];
@@ -136,15 +109,10 @@ export default function Home() {
                   );
                 })}
               </nav>
-              <span className="font-mono text-[10.5px] uppercase tracking-[0.06em] text-forest/55">
-                (Last updated, {site.lastUpdated})
-              </span>
             </footer>
           </div>
         </main>
       </div>
-
-      <Cursor />
     </>
   );
 }
