@@ -50,21 +50,3 @@ export function MailIcon({ size = 18, ...props }: IconProps) {
     </svg>
   );
 }
-
-export function ResumeIcon({ size = 18, ...props }: IconProps) {
-  return (
-    <svg
-      {...base(size)}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.9}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...props}
-    >
-      <path d="M14 2.5H7a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.5z" />
-      <path d="M14 2.5v5h5" />
-      <path d="M8.5 12.5h7M8.5 16h7" />
-    </svg>
-  );
-}

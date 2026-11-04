@@ -1,11 +1,9 @@
 import type { ReactElement, ReactNode } from "react";
-import Clock from "@/components/Clock";
 import SocialLink from "@/components/SocialLink";
-import { GitHubIcon, LinkedInIcon, MailIcon, ResumeIcon, XIcon } from "@/components/Icons";
+import { GitHubIcon, LinkedInIcon, MailIcon, XIcon } from "@/components/Icons";
 import { site, type LinkId } from "@/data/site";
 
 const ICONS: Record<LinkId, (props: { size?: number }) => ReactElement> = {
-  resume: ResumeIcon,
   linkedin: LinkedInIcon,
   github: GitHubIcon,
   x: XIcon,
@@ -47,7 +45,6 @@ export default function Home() {
       { "@type": "CollegeOrUniversity", name: "University of Michigan" },
       { "@type": "Organization", name: "Relay", url: site.relay.href },
     ],
-    address: { "@type": "PostalAddress", addressLocality: "Ann Arbor", addressRegion: "MI", addressCountry: "US" },
     sameAs: site.links.filter((l) => l.href.startsWith("http")).map((l) => l.href),
   };
 
@@ -61,28 +58,30 @@ export default function Home() {
       <div className="full-height relative z-10 flex items-center justify-center px-5 py-10 sm:px-4 sm:py-8">
         <main className="page-load-blur w-full max-w-[700px] text-forest sm:px-10">
           <div className="flex flex-col gap-2.5">
-            {/* location / local time */}
-            <div className="flex items-center justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.08em] text-forest/75">
-              <span>&quot;Location&quot; {site.location.label}</span>
+            {/* favourite word */}
+            <div className="font-mono text-[11px] uppercase tracking-[0.08em] text-forest/75">
               <span>
-                &quot;Local time&quot; <Clock timeZone={site.location.timeZone} />
+                &quot;{site.word.romaji}&quot;{" "}
+                <span lang="ja" className="tracking-normal">
+                  {site.word.ja}
+                </span>
               </span>
             </div>
 
             {/* name */}
             <h1 className="mb-[var(--para-gap)] font-serif text-[clamp(32px,6vw,44px)] font-medium leading-[1.05] tracking-[-0.022em]">
               {site.name}
-              <span className="text-brick"> .</span>
             </h1>
 
             <Section label="Work" accent="sun">
               <p>I&apos;m a Computer Science student at the University of Michigan.</p>
               <p>
-                I built{" "}
+                I helped build{" "}
                 <a className="link" href={site.relay.href} target="_blank" rel="noopener noreferrer">
                   {site.relay.label}
-                </a>
-                , a messaging platform that makes interacting with AI agents as simple as texting.
+                </a>{" "}
+                and Swsh, along with a handful of my own startups that didn&apos;t make it — each one taught me more than
+                the last.
               </p>
               <p>
                 I believe we&apos;re still incredibly early in AI. Those of us building and using it today are in the top
