@@ -160,9 +160,63 @@ body {
   transform: translate3d(var(--mx, 0px), var(--my, 0px), 0) scale(1.08);
 }
 
+/* ---------- written name (manim-style Write) ---------- */
+
+.written-name-fill {
+  fill: currentColor;
+  opacity: 0;
+  animation-name: writtenNameFill;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+}
+
+@keyframes writtenNameFill {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.written-name-stroke {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation-name: writtenNameDraw;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+
+@keyframes writtenNameDraw {
+  0% {
+    stroke-dashoffset: 1;
+    stroke-opacity: 0.85;
+  }
+  72% {
+    stroke-dashoffset: 0;
+    stroke-opacity: 0.85;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    stroke-opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .page-load-blur {
     animation: none;
+  }
+  .written-name-fill {
+    opacity: 1;
+    animation: none;
+  }
+  .written-name-stroke {
+    display: none;
   }
   .social-inner,
   .link,

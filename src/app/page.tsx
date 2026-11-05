@@ -1,5 +1,6 @@
 import type { ReactElement, ReactNode } from "react";
 import SocialLink from "@/components/SocialLink";
+import WrittenName from "@/components/WrittenName";
 import { GitHubIcon, LinkedInIcon, MailIcon, XIcon } from "@/components/Icons";
 import { site, type LinkId } from "@/data/site";
 
@@ -64,8 +65,8 @@ export default function Home() {
             </div>
 
             {/* name */}
-            <h1 className="mb-[var(--para-gap)] font-serif text-[clamp(32px,6vw,44px)] font-medium leading-[1.05] tracking-[-0.022em]">
-              {site.name}
+            <h1 className="mb-[var(--para-gap)] text-[clamp(32px,6vw,44px)] leading-[1.05]">
+              <WrittenName />
             </h1>
 
             <Section label="Work" accent="sun">
